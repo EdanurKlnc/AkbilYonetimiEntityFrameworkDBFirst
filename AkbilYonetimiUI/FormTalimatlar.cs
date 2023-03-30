@@ -244,7 +244,7 @@ namespace AkbilYonetimiUI
 
             }
             MessageBox.Show($"{sayac} adet talimat iptal edilmiştir");
-            TalimatlariDataGrideGetir();
+            TalimatlariDataGrideGetir(checkBoxTumunuGoster.Checked);
             BekleyenTalimatSayisiniGetir();
         }
         private void talimatiYukleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -274,7 +274,7 @@ namespace AkbilYonetimiUI
                     context.SaveChanges();
                 }
                 MessageBox.Show($"{sayac} adet talimat akbile yüklendi");
-                TalimatlariDataGrideGetir();
+                TalimatlariDataGrideGetir(checkBoxTumunuGoster.Checked);
                 BekleyenTalimatSayisiniGetir();
             }
             catch (Exception hata)
