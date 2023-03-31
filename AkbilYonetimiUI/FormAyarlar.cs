@@ -1,10 +1,13 @@
-﻿
+﻿using AkbilYonetimiIsKatmani;
+using AkbilYonetimiVeriKatmani;
+using AkbilYonetimiVeriKatmani.Models;
 using System.Data.SqlClient;
 
 namespace AkbilYonetimiUI
 {
     public partial class FormAyarlar : Form
     {
+        AkbildbContext contex = new AkbildbContext();
         public FormAyarlar()
         {
             InitializeComponent();
@@ -24,7 +27,19 @@ namespace AkbilYonetimiUI
         {
             try
             {
-                
+                var kullanici = contex.Kullanicilars.FirstOrDefault(x => x.Id == GenelIslemler.GirisYapanKullaniciID);
+                if (kullanici != null)
+                {
+                    txtAd.Text = kullanici.Ad;
+                    txtSoyad.Text = kullanici.Soyad;
+                    txtEmail.Text = kullanici.Email;
+                    txtEmail.Enabled = false;
+                    dtpDogumTarihi.Value = kullanici.DogumTarihi;
+                }
+                else
+                {
+                    MessageBox.Show("Kullanıcı bilgileri getilemedi.");
+                }
             }
             catch (Exception hata)
             {
@@ -37,11 +52,35 @@ namespace AkbilYonetimiUI
         {
             try
             {
-            }
-            catch (Exception hata)
-            {
+                var kullanici = contex.Kullanicilars.FirstOrDefault(x => x.Id == GenelIslemler.GirisYapanKullaniciID);
+                if (kullanici != null) //kullanıcının girdiği önceki ile aynıysa güncellemeyi engelleme
+                {
+                    kullanici.Ad = txtAd.Text.Trim();
+                    kullanici.Soyad = txtSoyad.Text.Trim();
+                    kullanici.DogumTarihi = dtpDogumTarihi.Value;
 
-                MessageBox.Show("Hata");
+                    if (!string.IsNullOrEmpty(txtYeniSifre.Text.Trim()))
+                    {
+                        if (!string.IsNullOrEmpty(txtYeniSifre.Text.Trim()) && kullanici.Parola != GenelIslemler.MD5Encryption(txtYeniSifre.Text.Trim() ))
+                        {
+                            kullanici.Parola = GenelIslemler.MD5Encryption(txtYeniSifre.Text.Trim());
+                            MessageBox.Show("Yeni şifre girdiniz");
+                        }
+                    }
+                    contex.Kullanicilars.Update(kullanici);
+                    if (contex.SaveChanges() > 0)
+                    {
+                        MessageBox.Show("Bilgileriniz güncellendi");
+                        FormAnasayfa formA = new FormAnasayfa();
+                        this.Hide();
+                        formA.Show();
+
+                    }
+                }
+            }
+            catch (Exception )
+            {
+                MessageBox.Show("Hata" );
             }
         }
     }
