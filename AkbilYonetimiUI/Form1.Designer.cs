@@ -65,6 +65,7 @@
             checkBoxHatirla.TabIndex = 7;
             checkBoxHatirla.Text = "Beni hatırla !";
             checkBoxHatirla.UseVisualStyleBackColor = true;
+            checkBoxHatirla.CheckedChanged += checkBoxHatirla_CheckedChanged_1;
             // 
             // txtEmail
             // 

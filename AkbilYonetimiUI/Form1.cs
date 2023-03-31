@@ -77,29 +77,10 @@ namespace AkbilYonetimiUI
                 MessageBox.Show("Beklenmedik bir sorun oluþtu!" + hata.Message);
             }
         }
-
-
-        private void checkBoxHatirla_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxHatirla.Checked)
-            {
-                Properties.Akbil.Default.BeniHatirla = true;
-                Properties.Akbil.Default.Save();
-            }
-            else
-            {
-                Properties.Akbil.Default.BeniHatirla = false;
-                Properties.Akbil.Default.Save();
-             
-            }
-           
-        }
-
         private void BeniHatirla()
         {
             Properties.Akbil.Default.BeniHatirlaKullaniciEmail = txtEmail.Text.Trim();
             Properties.Akbil.Default.BeniHatirlaKullaniciSifre = txtEmail.Text.Trim();
-            Properties.Akbil.Default.Save();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -121,6 +102,7 @@ namespace AkbilYonetimiUI
             {
                 txtEmail.Text = Properties.Akbil.Default.BeniHatirlaKullaniciEmail;
                 txtSifre.Text = Properties.Akbil.Default.BeniHatirlaKullaniciSifre;
+                checkBoxHatirla.Checked = true;
             }
 
         }
@@ -130,6 +112,21 @@ namespace AkbilYonetimiUI
             if (e.KeyChar == Convert.ToChar(Keys.Enter)) //basýlan tuþ enter ise giriþ yap
             {
                 GirisYap();
+            }
+        }
+
+        private void checkBoxHatirla_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (checkBoxHatirla.Checked)
+            {
+                Properties.Akbil.Default.BeniHatirla = true;
+                Properties.Akbil.Default.Save();
+            }
+            else
+            {
+                Properties.Akbil.Default.BeniHatirla = false;
+                Properties.Akbil.Default.Save();
+
             }
         }
     }

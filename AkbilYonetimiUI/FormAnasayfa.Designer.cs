@@ -79,6 +79,7 @@
             Controls.Add(btnAkbil);
             Name = "FormAnasayfa";
             Text = "FormAnasayfa";
+            FormClosed += FormAnasayfa_FormClosed;
             Load += FormAnasayfa_Load;
             ResumeLayout(false);
         }
